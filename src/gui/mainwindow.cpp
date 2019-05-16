@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui_->setupUi(this);
     setWindowTitle("cryptoBT");
     setWindowIcon(QIcon(":/icons/logo.png"));
+
 }
 
 MainWindow::~MainWindow()
