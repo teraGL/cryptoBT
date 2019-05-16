@@ -27,9 +27,11 @@ INCLUDEPATH += \
             src/ui
 
 HEADERS += \
-        src/gui/mainwindow.h
+        src/gui/mainwindow.h \
+        src/gui/torrentview.h
 
 SOURCES += \
+        src/gui/torrentview.cpp \
         src/main.cpp \
         src/gui/mainwindow.cpp
 
