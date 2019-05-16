@@ -36,3 +36,6 @@ SOURCES += \
 FORMS += \
         src/ui/mainwindow.ui
 
+RESOURCES += \
+    img/icons.qrc
+
