@@ -34,6 +34,7 @@ HEADERS += \
         src/crypto/serpentcipher.h \
         src/crypto/twofishcipher.h \
         src/gui/mainwindow.h \
+        src/gui/torrentcreator.h \
         src/gui/torrentview.h
 
 SOURCES += \
@@ -43,11 +44,13 @@ SOURCES += \
         src/crypto/camelliacipher.cpp \
         src/crypto/serpentcipher.cpp \
         src/crypto/twofishcipher.cpp \
+        src/gui/torrentcreator.cpp \
         src/gui/torrentview.cpp \
         src/main.cpp \
         src/gui/mainwindow.cpp
 
 FORMS += \
+        src/ui/torrentcreator.ui \
         src/ui/mainwindow.ui
 
 RESOURCES += \

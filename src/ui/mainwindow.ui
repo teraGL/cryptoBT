@@ -130,7 +130,6 @@
    <addaction name="actionResume"/>
    <addaction name="actionDelete"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAddTorrentFile">
    <property name="text">
     <string>Add Torrent File...</string>

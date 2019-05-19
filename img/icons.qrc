@@ -17,5 +17,7 @@
         <file>add-user.svg</file>
         <file>gen-new-key-pair.svg</file>
         <file>list-public-keys.svg</file>
+        <file>cancel.svg</file>
+        <file>save.svg</file>
     </qresource>
 </RCC>

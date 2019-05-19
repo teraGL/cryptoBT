@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TorrentCreator</class>
+ <widget class="QDialog" name="TorrentCreator">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>440</width>
+    <height>370</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Create Torrent</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Files:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="textInputPath"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnFile">
+       <property name="text">
+        <string>File</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../img/icons.qrc">
+         <normaloff>:/icons/text-plain.svg</normaloff>:/icons/text-plain.svg</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnFolder">
+       <property name="text">
+        <string>Folder</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../img/icons.qrc">
+         <normaloff>:/icons/folder-documents.svg</normaloff>:/icons/folder-documents.svg</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="tabPosition">
+      <enum>QTabWidget::North</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="Encrypt">
+      <attribute name="icon">
+       <iconset resource="../../img/icons.qrc">
+        <normaloff>:/icons/document-encrypt.svg</normaloff>:/icons/document-encrypt.svg</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Encrypt</string>
+      </attribute>
+      <widget class="QLabel" name="labelEncAlgorithm">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>9</y>
+         <width>142</width>
+         <height>18</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Encryption Algorithm:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxKeySize">
+       <property name="geometry">
+        <rect>
+         <x>176</x>
+         <y>9</y>
+         <width>181</width>
+         <height>26</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelKeySize">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>41</y>
+         <width>64</width>
+         <height>18</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Key Size:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxEncAlgorithm">
+       <property name="geometry">
+        <rect>
+         <x>176</x>
+         <y>41</y>
+         <width>181</width>
+         <height>26</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>73</y>
+         <width>83</width>
+         <height>18</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Public Keys:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="textEdit">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>99</y>
+         <width>256</width>
+         <height>111</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>130</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Choose</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="Trackers">
+      <attribute name="icon">
+       <iconset resource="../../img/icons.qrc">
+        <normaloff>:/icons/document-edit.svg</normaloff>:/icons/document-edit.svg</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Trackers</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="labelComment">
+         <property name="text">
+          <string>Comment:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEditComment"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelTrackersURLs">
+         <property name="text">
+          <string>Trackers URLs:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="textEditTrackersURLs"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Options">
+      <attribute name="icon">
+       <iconset resource="../../img/icons.qrc">
+        <normaloff>:/icons/gear.svg</normaloff>:/icons/gear.svg</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Options</string>
+      </attribute>
+      <widget class="QLabel" name="labelPieceSize">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>41</y>
+         <width>75</width>
+         <height>18</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Piece Size:</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>70</y>
+         <width>348</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Private torrent (Won't distribute on DHT network)</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_2">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>100</y>
+         <width>198</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Start seeding immediately</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxPieceSize">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>35</y>
+         <width>86</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnCancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../img/icons.qrc">
+         <normaloff>:/icons/cancel.svg</normaloff>:/icons/cancel.svg</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnSave">
+       <property name="text">
+        <string>Save</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../img/icons.qrc">
+         <normaloff>:/icons/save.svg</normaloff>:/icons/save.svg</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../img/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>
