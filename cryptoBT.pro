@@ -27,10 +27,22 @@ INCLUDEPATH += \
             src/ui
 
 HEADERS += \
+        src/crypto/aescipher.h \
+        src/crypto/blockcipher.h \
+        src/crypto/blockcryptor.h \
+        src/crypto/camelliacipher.h \
+        src/crypto/serpentcipher.h \
+        src/crypto/twofishcipher.h \
         src/gui/mainwindow.h \
         src/gui/torrentview.h
 
 SOURCES += \
+        src/crypto/aescipher.cpp \
+        src/crypto/blockcipher.cpp \
+        src/crypto/blockcryptor.cpp \
+        src/crypto/camelliacipher.cpp \
+        src/crypto/serpentcipher.cpp \
+        src/crypto/twofishcipher.cpp \
         src/gui/torrentview.cpp \
         src/main.cpp \
         src/gui/mainwindow.cpp
