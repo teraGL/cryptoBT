@@ -11,11 +11,48 @@ MainWindow::MainWindow(QWidget* parent)
     setWindowTitle("cryptoBT");
     setWindowIcon(QIcon(":/icons/logo.png"));
 
+    // Set icons
+    ui_->actionAddTorrentLink->setIcon(QIcon(":/icons/insert-link.svg"));
+    ui_->actionAddTorrentFile->setIcon(QIcon(":/icons/list-add.svg"));
+    ui_->actionCreateNewTorrent->setIcon(QIcon(":/icons/document-edit.svg"));
+    ui_->actionExit->setIcon(QIcon(":/icons/application-exit.svg"));
+    ui_->actionPause->setIcon(QIcon(":/icons/media-playback-pause.svg"));
+    ui_->actionResume->setIcon(QIcon(":/icons/media-playback-start.svg"));
+    ui_->actionDelete->setIcon(QIcon(":/icons/list-remove.svg"));
+    ui_->actionNewKeyPair->setIcon(QIcon(":/icons/gen-new-key-pair.svg"));
+    ui_->actionImportPublicKey->setIcon(QIcon(":/icons/add-user.svg"));
+    ui_->actionListPublicKeys->setIcon(QIcon(":/icons/list-public-keys.svg"));
+    ui_->actionPreferences->setIcon(QIcon(":/icons/gear.svg"));
+    ui_->actionFAQ->setIcon(QIcon(":/icons/help-contents.svg"));
+    ui_->actionAbout->setIcon(QIcon(":/icons/help-about.svg"));
+
+    QWidget* spacer = new QWidget();
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui_->toolBar->addWidget(spacer);
+    ui_->toolBar->addAction(ui_->actionPreferences);
+
+    createKeyboardShortcuts();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui_;
+}
+
+void MainWindow::createKeyboardShortcuts()
+{
+    ui_->actionAddTorrentFile->setShortcut(QKeySequence::Open);
+    ui_->actionAddTorrentLink->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_O);
+    ui_->actionCreateNewTorrent->setShortcut(QKeySequence::New);
+    ui_->actionExit->setShortcut(Qt::CTRL + Qt::Key_Q);
+
+    ui_->actionResume->setShortcut(Qt::CTRL + Qt::Key_S);
+    ui_->actionPause->setShortcut(Qt::CTRL + Qt::Key_P);
+    ui_->actionDelete->setShortcut(QKeySequence::Delete);
+    ui_->actionPreferences->setShortcut(Qt::ALT + Qt::Key_O);
+
+    ui_->actionNewKeyPair->setShortcut(Qt::CTRL + Qt::Key_G);
+    ui_->actionImportPublicKey->setShortcut(Qt::CTRL + Qt::Key_I);
 }
 
 void MainWindow::about()

@@ -17,8 +17,8 @@ public:
     ~MainWindow() override;
 
 private slots:
+    void createKeyboardShortcuts();
     void about();
-
     void on_actionAbout_triggered();
 
 private:

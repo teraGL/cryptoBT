@@ -132,100 +132,56 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAddTorrentFile">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/list-add.svg</normaloff>:/icons/list-add.svg</iconset>
-   </property>
    <property name="text">
     <string>Add Torrent File...</string>
    </property>
   </action>
   <action name="actionAddTorrentLink">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/insert-link.svg</normaloff>:/icons/insert-link.svg</iconset>
-   </property>
    <property name="text">
     <string>Add Torrent Link...</string>
    </property>
   </action>
   <action name="actionCreateNewTorrent">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/document-edit.svg</normaloff>:/icons/document-edit.svg</iconset>
-   </property>
    <property name="text">
     <string>Create New Torrent...</string>
    </property>
   </action>
   <action name="actionExit">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/application-exit.svg</normaloff>:/icons/application-exit.svg</iconset>
-   </property>
    <property name="text">
     <string>Exit</string>
    </property>
   </action>
   <action name="actionPause">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/media-playback-pause.svg</normaloff>:/icons/media-playback-pause.svg</iconset>
-   </property>
    <property name="text">
     <string>Pause</string>
    </property>
   </action>
   <action name="actionResume">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/media-playback-start.svg</normaloff>:/icons/media-playback-start.svg</iconset>
-   </property>
    <property name="text">
     <string>Resume</string>
    </property>
   </action>
   <action name="actionDelete">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/list-remove.svg</normaloff>:/icons/list-remove.svg</iconset>
-   </property>
    <property name="text">
     <string>Delete</string>
    </property>
   </action>
   <action name="actionNewKeyPair">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/gen-new-key-pair.svg</normaloff>:/icons/gen-new-key-pair.svg</iconset>
-   </property>
    <property name="text">
     <string>Generate New Key Pair...</string>
    </property>
   </action>
   <action name="actionImportPublicKey">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/add-user.svg</normaloff>:/icons/add-user.svg</iconset>
-   </property>
    <property name="text">
     <string>Import Public Key...</string>
    </property>
   </action>
   <action name="actionPreferences">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/gear.svg</normaloff>:/icons/gear.svg</iconset>
-   </property>
    <property name="text">
     <string>Preferences</string>
    </property>
   </action>
   <action name="actionListPublicKeys">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/list-public-keys.svg</normaloff>:/icons/list-public-keys.svg</iconset>
-   </property>
    <property name="text">
     <string>List Public Keys...</string>
    </property>
@@ -255,19 +211,11 @@
    </property>
   </action>
   <action name="actionFAQ">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/help-contents.svg</normaloff>:/icons/help-contents.svg</iconset>
-   </property>
    <property name="text">
     <string>FAQ</string>
    </property>
   </action>
   <action name="actionAbout">
-   <property name="icon">
-    <iconset resource="../../img/icons.qrc">
-     <normaloff>:/icons/help-about.svg</normaloff>:/icons/help-about.svg</iconset>
-   </property>
    <property name="text">
     <string>About</string>
    </property>
@@ -434,8 +382,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="../../img/icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
