@@ -2,6 +2,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "torrentcreatordialog.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{parent}
@@ -12,6 +13,7 @@ MainWindow::MainWindow(QWidget* parent)
     setWindowIcon(QIcon(":/icons/logo.png"));
 
     // Set icons
+    ui_->toolBar->setIconSize(QSize(30, 30));
     ui_->actionAddTorrentLink->setIcon(QIcon(":/icons/insert-link.svg"));
     ui_->actionAddTorrentFile->setIcon(QIcon(":/icons/list-add.svg"));
     ui_->actionCreateNewTorrent->setIcon(QIcon(":/icons/document-edit.svg"));
@@ -97,4 +99,10 @@ void MainWindow::about()
 void MainWindow::on_actionAbout_triggered()
 {
     about();
+}
+
+void MainWindow::on_actionCreateNewTorrent_triggered()
+{
+    torrent_creator_dlg_ = new TorrentCreatorDialog(this);
+    torrent_creator_dlg_->show();
 }

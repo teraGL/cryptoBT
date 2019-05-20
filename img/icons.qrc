@@ -19,5 +19,6 @@
         <file>list-public-keys.svg</file>
         <file>cancel.svg</file>
         <file>save.svg</file>
+        <file>choose-public-key.svg</file>
     </qresource>
 </RCC>
