@@ -33,6 +33,6 @@ protected:
     size_t key_size_;
 };
 
-QString createDefaultSeedingDir(const QString& filepath);
+QString createDefaultSeedingDir();
 
 #endif // BLOCKCIPHER_H

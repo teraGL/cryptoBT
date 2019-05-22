@@ -7,7 +7,7 @@ TEMPLATE = app
 
 CONFIG += c++11
 QT     += core gui widgets
-LIBS   += -lcryptopp
+LIBS   += -lcryptopp -ltorrent-rasterbar
 
 CONFIG(debug, debug|release) {
     DESTDIR = build/debug
@@ -23,14 +23,19 @@ UI_DIR = $$DESTDIR/.u
 
 INCLUDEPATH += \
             src \
+            src/core \
+            src/core/bittorrent \
+            src/crypto \
             src/gui \
             src/ui
 
 HEADERS += \
+        src/core/bittorrent/torrentcreatorthread.h \
         src/crypto/aescipher.h \
         src/crypto/blockcipher.h \
         src/crypto/blockcryptor.h \
         src/crypto/camelliacipher.h \
+        src/crypto/encryptorthread.h \
         src/crypto/serpentcipher.h \
         src/crypto/twofishcipher.h \
         src/gui/mainwindow.h \
@@ -38,10 +43,12 @@ HEADERS += \
         src/gui/torrentview.h
 
 SOURCES += \
+        src/core/bittorrent/torrentcreatorthread.cpp \
         src/crypto/aescipher.cpp \
         src/crypto/blockcipher.cpp \
         src/crypto/blockcryptor.cpp \
         src/crypto/camelliacipher.cpp \
+        src/crypto/encryptorthread.cpp \
         src/crypto/serpentcipher.cpp \
         src/crypto/twofishcipher.cpp \
         src/gui/torrentcreatordialog.cpp \

@@ -410,11 +410,6 @@
          <string>16 MiB</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string>32 MiB</string>
-        </property>
-       </item>
       </widget>
      </widget>
     </widget>
@@ -429,7 +424,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QProgressBar" name="progressBarEnctrypting">
+      <widget class="QProgressBar" name="progressBarEncrypting">
        <property name="value">
         <number>0</number>
        </property>
@@ -443,7 +438,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QProgressBar" name="progressBarCreatingTorrent">
+      <widget class="QProgressBar" name="progressBarTorrent">
        <property name="value">
         <number>0</number>
        </property>

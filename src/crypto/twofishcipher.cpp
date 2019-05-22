@@ -69,7 +69,9 @@ void TwofishCipher::loadSecretKey()
 
 void TwofishCipher::encryptFile(const QString& filePath) const
 {
-    const auto outFile = createDefaultSeedingDir(filePath).toUtf8().constData();
+    const QString fileEncryptedExt = createDefaultSeedingDir()
+                                     + QFileInfo(filePath).fileName() + ".enf";
+    const auto outFile = fileEncryptedExt.toUtf8().constData();
 
     try {
         CBC_Mode<Twofish>::Encryption encryptor(key_, key_size_, iv_);
@@ -77,7 +79,7 @@ void TwofishCipher::encryptFile(const QString& filePath) const
                       new StreamTransformationFilter(encryptor,
                           new FileSink(outFile)));
 
-        const QString outputMessage = "Encrypt to '" + QString(outFile) + "' using Twofish-"
+        const QString outputMessage = "Encrypt to '" + fileEncryptedExt + "' using Twofish-"
                                       + QString::number(8 * key_size_);
         qDebug() << outputMessage;
     } catch (const Exception& e) {

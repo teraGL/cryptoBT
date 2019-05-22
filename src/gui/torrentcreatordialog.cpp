@@ -7,13 +7,16 @@
 #include <QMessageBox>
 #include <QDebug>
 
+#include "crypto/blockcryptor.h"
+
 //#include "core/bittorrent/session.h"
-//#include "core/bittorrent/torrentcreatorthread.h"
+#include "core/bittorrent/torrentcreatorthread.h"
 //#include "core/bittorrent/torrentinfo.h"
 
 TorrentCreatorDialog::TorrentCreatorDialog(QWidget* parent, const QString& defautPath)
     : QDialog{parent}
     , ui_{new Ui::TorrentCreatorDialog}
+    , creatorThread_{new BitTorrent::TorrentCreatorThread(this)}
 {
     ui_->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -25,10 +28,11 @@ TorrentCreatorDialog::TorrentCreatorDialog(QWidget* parent, const QString& defau
     connect(ui_->btnAddFolder, &QPushButton::clicked, this, &TorrentCreatorDialog::onAddFolderButtonClicked);
     connect(ui_->buttonBox, &QDialogButtonBox::accepted, this, &TorrentCreatorDialog::onCreateButtonClicked);
 
-//    connect(creatorThread_, &BitTorrent::TorrentCreatorThread::creationSuccess, this, &TorrentCreatorDialog::handleCreationSuccess);
-//    connect(creatorThread_, &BitTorrent::TorrentCreatorThread::creationFailure, this, &TorrentCreatorDialog::handleCreationFailure);
-//    connect(creatorThread_, &BitTorrent::TorrentCreatorThread::updateProgress, this, &TorrentCreatorDialog::updateProgressBar);
+    connect(creatorThread_, &BitTorrent::TorrentCreatorThread::creationSuccess, this, &TorrentCreatorDialog::handleCreationSuccess);
+    connect(creatorThread_, &BitTorrent::TorrentCreatorThread::creationFailure, this, &TorrentCreatorDialog::handleCreationFailure);
+    connect(creatorThread_, &BitTorrent::TorrentCreatorThread::updateProgress, this, &TorrentCreatorDialog::updateProgressBarTorrent);
 
+    loadSettings();
     updateInputPath(defautPath);
 
     show();
@@ -37,38 +41,24 @@ TorrentCreatorDialog::TorrentCreatorDialog(QWidget* parent, const QString& defau
 TorrentCreatorDialog::~TorrentCreatorDialog()
 {
     qDebug() << "Removed TorrentCreatorDialog...";
-//    saveSettings();
+    saveSettings();
     delete ui_;
-}
-
-
-QString createDefaultSeedingDir(const QString& filepath)
-{
-    QString documents_dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    qDebug() << "Standard Documents dir =" << documents_dir << "\n";
-
-    if (!documents_dir.contains("Documents")) {
-        documents_dir += "/Documents";
-        QDir().mkdir(documents_dir);
-        qDebug() << "Created '~/Documents' successfully!\n";
-    }
-
-    const QString seeding_dir = documents_dir + "/cryptoBT/Seeding/";
-    if (!QDir(seeding_dir).exists()) {
-        QDir().mkpath(seeding_dir);
-        qDebug() << "Created '~/Documents/cryptBT/Seeding' successfully!\n";
-    }
-
-    const QString outFile = seeding_dir + QFileInfo(filepath).fileName() + ".enf";
-    qDebug() << "Output file: " << outFile;
-
-    return outFile;
 }
 
 void TorrentCreatorDialog::updateInputPath(const QString &path)
 {
     if (path.isEmpty()) return;
     ui_->textInputPath->setText(QDir::toNativeSeparators(path));
+}
+
+void TorrentCreatorDialog::updateProgressBarEncryption(int progress)
+{
+    ui_->progressBarEncrypting->setValue(progress);
+}
+
+void TorrentCreatorDialog::updateProgressBarTorrent(int progress)
+{
+    ui_->progressBarTorrent->setValue(progress);
 }
 
 void TorrentCreatorDialog::onAddFileButtonClicked()
@@ -89,15 +79,15 @@ void TorrentCreatorDialog::onAddFolderButtonClicked()
 
 void TorrentCreatorDialog::onCreateButtonClicked()
 {
-    QString input = QDir::fromNativeSeparators(ui_->textInputPath->text()).trimmed();
+    input_ = QDir::fromNativeSeparators(ui_->textInputPath->text()).trimmed();
 
     // test if readable
-    const QFileInfo fi(input);
+    const QFileInfo fi(input_);
     if (!fi.isReadable()) {
         QMessageBox::critical(this, tr("Torrent creation failed"), tr("Reason: Path to file/folder is not readable."));
         return;
     }
-    input = fi.canonicalFilePath();
+    input_ = fi.canonicalFilePath();
 
     // get save path
     const QString savePath = QString(QDir::homePath()) + QLatin1Char('/') + fi.fileName() + QLatin1String(".torrent");
@@ -111,17 +101,45 @@ void TorrentCreatorDialog::onCreateButtonClicked()
     setInteractionEnabled(false);
     setCursor(QCursor(Qt::WaitCursor));
 
+    // Encrypting files
+    const int algorithm_index = ui_->comboBoxAlgorithm->currentIndex();
+    const size_t key_size = ui_->comboBoxKeySize->currentText().toInt();
+
+    BlockCryptor encryptor;
+    switch (algorithm_index) {
+        case 0:  encryptor.setCipher<AesCipher>(key_size);       break;
+        case 1:  encryptor.setCipher<SerpentCipher>(key_size);   break;
+        case 2:  encryptor.setCipher<TwofishCipher>(key_size);   break;
+        case 3:  encryptor.setCipher<CamelliaCipher>(key_size);  break;
+    }
+
+    encryptor.generateKey();
+    ui_->progressBarEncrypting->setValue(2);
+
+    encryptor.saveSecretKey();
+    ui_->progressBarEncrypting->setValue(4);
+
+    encryptor.encryptFile(input_);
+    ui_->progressBarEncrypting->setValue(100);
+
+
+    // Creating torrent file
+    const QString seeding_dir = createDefaultSeedingDir();
+    const QString fileExt = QFileInfo(input_).fileName() + ".enf";
+    input_ = seeding_dir + fileExt;
+    qDebug() << "Output file: " << input_;
+
     const QStringList trackers = ui_->textTrackersURLs->toPlainText().trimmed()
         .replace(QRegularExpression("\n\n[\n]+"), "\n\n").split('\n');
     const QString comment = ui_->lineComment->text();
 
-//    const QString default_seeding_dir = createDefaultSeedingDir(ui_->textInputPath->text());
+    creatorThread_->create({ ui_->checkBoxPrivateTorrent->isChecked(), getPieceSize(),
+                             input_, destination, comment, trackers });
 
+//    const QString default_seeding_dir = createDefaultSeedingDir(ui_->textInputPath->text());
     // 1) Encrypt file/folder
     // 2) Save Secret Key & IV
     // 3) default_seeding_dir = createDefaultSeedingDir(ui_->textInputPath->text());
-    //    updateInputPath(default_seeding_dir);
-    // 4)
 }
 
 void TorrentCreatorDialog::handleCreationFailure(const QString &msg)
@@ -151,9 +169,25 @@ void TorrentCreatorDialog::handleCreationSuccess(const QString &path, const QStr
 
 //        BitTorrent::Session::instance()->addTorrent(t, params);
 //    }
-//    QMessageBox::information(this, tr("Torrent creator")
-//        , QString("%1\n%2").arg(tr("Torrent created:"), Utils::Fs::toNativePath(path)));
+    QMessageBox::information(this, tr("Torrent creator")
+        , QString("%1\n%2").arg(tr("Torrent created:"), QDir::toNativeSeparators(path)));
     setInteractionEnabled(true);
+}
+
+void TorrentCreatorDialog::saveSettings()
+{
+
+}
+
+void TorrentCreatorDialog::loadSettings()
+{
+
+}
+
+int TorrentCreatorDialog::getPieceSize() const
+{
+    const int pieceSizes[] = {0, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384};  // base unit in KiB
+    return pieceSizes[ui_->comboBoxPieceSize->currentIndex()] * 1024;
 }
 
 void TorrentCreatorDialog::setInteractionEnabled(bool enabled)
@@ -165,4 +199,24 @@ void TorrentCreatorDialog::setInteractionEnabled(bool enabled)
     ui_->Trackers->setEnabled(enabled);
     ui_->Options->setEnabled(enabled);
     ui_->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(enabled);
+}
+
+QString createDefaultSeedingDir()
+{
+    QString documents_dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    qDebug() << "Standard Documents dir =" << documents_dir << "\n";
+
+    if (!documents_dir.contains("Documents")) {
+        documents_dir += "/Documents";
+        QDir().mkdir(documents_dir);
+        qDebug() << "Created '~/Documents' successfully!\n";
+    }
+
+    const QString seeding_dir = documents_dir + "/cryptoBT/Seeding/";
+    if (!QDir(seeding_dir).exists()) {
+        QDir().mkpath(seeding_dir);
+        qDebug() << "Created '~/Documents/cryptBT/Seeding' successfully!\n";
+    }
+
+    return seeding_dir;
 }

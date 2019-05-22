@@ -9,16 +9,23 @@ namespace Ui
     class TorrentCreatorDialog;
 }
 
+namespace BitTorrent
+{
+    class TorrentCreatorThread;
+}
+
 class TorrentCreatorDialog : public QDialog
 {
     Q_OBJECT
 
 public:
     explicit TorrentCreatorDialog(QWidget* parent = nullptr, const QString& defaultPath = {});
-    ~TorrentCreatorDialog();
+    ~TorrentCreatorDialog() override;
     void updateInputPath(const QString& path);
 
 private slots:
+    void updateProgressBarEncryption(int progress);
+    void updateProgressBarTorrent(int progress);
     void onAddFileButtonClicked();
     void onAddFolderButtonClicked();
     void onCreateButtonClicked();
@@ -26,15 +33,14 @@ private slots:
     void handleCreationSuccess(const QString &path, const QString &branchPath);
 
 private:
-//    void saveSettings();
-//    void loadSettings();
-//    int getPieceSize() const;
+    void saveSettings();
+    void loadSettings();
+    int getPieceSize() const;
     void setInteractionEnabled(bool enabled);
 
     Ui::TorrentCreatorDialog* ui_;
-    QString filename_;
+    BitTorrent::TorrentCreatorThread* creatorThread_;
+    QString input_;
 };
-
-QString createDefaultSeedingDir(const QString& filepath);
 
 #endif // TORRENTCREATORDIALOG_H
