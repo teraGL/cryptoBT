@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QString>
+#include <QStringListModel>
 
 namespace Ui
 {
@@ -28,6 +29,7 @@ private slots:
     void updateProgressBarTorrent(int progress);
     void onAddFileButtonClicked();
     void onAddFolderButtonClicked();
+    void onChooseButtonClicked();
     void onCreateButtonClicked();
     void handleCreationFailure(const QString &msg);
     void handleCreationSuccess(const QString &path, const QString &branchPath);
@@ -40,6 +42,7 @@ private:
 
     Ui::TorrentCreatorDialog* ui_;
     BitTorrent::TorrentCreatorThread* creatorThread_;
+    QStringListModel* model_;
     QString input_;
 };
 

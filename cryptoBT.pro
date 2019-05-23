@@ -30,7 +30,9 @@ INCLUDEPATH += \
             src/ui
 
 HEADERS += \
+        src/core/bittorrent/session.h \
         src/core/bittorrent/torrentcreatorthread.h \
+        src/core/bittorrent/torrentinfo.h \
         src/crypto/aescipher.h \
         src/crypto/blockcipher.h \
         src/crypto/blockcryptor.h \
@@ -43,7 +45,9 @@ HEADERS += \
         src/gui/torrentview.h
 
 SOURCES += \
+        src/core/bittorrent/session.cpp \
         src/core/bittorrent/torrentcreatorthread.cpp \
+        src/core/bittorrent/torrentinfo.cpp \
         src/crypto/aescipher.cpp \
         src/crypto/blockcipher.cpp \
         src/crypto/blockcryptor.cpp \

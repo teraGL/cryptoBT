@@ -17,16 +17,21 @@ TorrentCreatorDialog::TorrentCreatorDialog(QWidget* parent, const QString& defau
     : QDialog{parent}
     , ui_{new Ui::TorrentCreatorDialog}
     , creatorThread_{new BitTorrent::TorrentCreatorThread(this)}
+    , model_{new QStringListModel(this)}
 {
     ui_->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setModal(false);
 
     ui_->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Create Torrent"));
+    ui_->pubKeysView->setModel(model_);
+    ui_->pubKeysView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     connect(ui_->btnAddFile, &QPushButton::clicked, this, &TorrentCreatorDialog::onAddFileButtonClicked);
     connect(ui_->btnAddFolder, &QPushButton::clicked, this, &TorrentCreatorDialog::onAddFolderButtonClicked);
+    connect(ui_->btnChoose, &QPushButton::clicked, this, &TorrentCreatorDialog::onChooseButtonClicked);
     connect(ui_->buttonBox, &QDialogButtonBox::accepted, this, &TorrentCreatorDialog::onCreateButtonClicked);
+    connect(ui_->buttonBox, &QDialogButtonBox::rejected, this, &TorrentCreatorDialog::close);
 
     connect(creatorThread_, &BitTorrent::TorrentCreatorThread::creationSuccess, this, &TorrentCreatorDialog::handleCreationSuccess);
     connect(creatorThread_, &BitTorrent::TorrentCreatorThread::creationFailure, this, &TorrentCreatorDialog::handleCreationFailure);
@@ -77,6 +82,20 @@ void TorrentCreatorDialog::onAddFolderButtonClicked()
     qDebug() << "folder:" << dirpath;
 }
 
+void TorrentCreatorDialog::onChooseButtonClicked()
+{
+    const QStringList fullPathPubKeys = QFileDialog::getOpenFileNames(
+                this, tr("Choose public keys"), QDir::homePath());
+
+    QStringList pubkeys;
+    QString filename;
+    for (const auto pb : fullPathPubKeys) {
+        filename = pb.split("/").last();
+        pubkeys.append(filename);
+    }
+    model_->setStringList(pubkeys);
+}
+
 void TorrentCreatorDialog::onCreateButtonClicked()
 {
     input_ = QDir::fromNativeSeparators(ui_->textInputPath->text()).trimmed();
@@ -113,6 +132,7 @@ void TorrentCreatorDialog::onCreateButtonClicked()
         case 3:  encryptor.setCipher<CamelliaCipher>(key_size);  break;
     }
 
+    // TODO: implement the way of displaying process of encryption
     encryptor.generateKey();
     ui_->progressBarEncrypting->setValue(2);
 
@@ -154,7 +174,8 @@ void TorrentCreatorDialog::handleCreationSuccess(const QString &path, const QStr
 {
     // Remove busy cursor
     setCursor(QCursor(Qt::ArrowCursor));
-//    if (ui_->checkStartSeeding->isChecked()) {
+    if (ui_->checkBoxStartSeeding->isChecked()) {
+        QMessageBox::information(this, tr("seeding checkbox"), tr("Start seeding immediately"));
 //        // Create save path temp data
 //        BitTorrent::TorrentInfo t = BitTorrent::TorrentInfo::loadFromFile(Utils::Fs::toNativePath(path));
 //        if (!t.isValid()) {
@@ -168,7 +189,7 @@ void TorrentCreatorDialog::handleCreationSuccess(const QString &path, const QStr
 //        params.ignoreShareLimits = ui_->checkIgnoreShareLimits->isChecked();
 
 //        BitTorrent::Session::instance()->addTorrent(t, params);
-//    }
+    }
     QMessageBox::information(this, tr("Torrent creator")
         , QString("%1\n%2").arg(tr("Torrent created:"), QDir::toNativeSeparators(path)));
     setInteractionEnabled(true);

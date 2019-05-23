@@ -104,5 +104,11 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionCreateNewTorrent_triggered()
 {
     torrent_creator_dlg_ = new TorrentCreatorDialog(this);
+    torrent_creator_dlg_->setAttribute(Qt::WA_DeleteOnClose);
     torrent_creator_dlg_->show();
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    close();
 }

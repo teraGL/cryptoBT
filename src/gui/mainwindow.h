@@ -26,6 +26,8 @@ private slots:
     void on_actionAbout_triggered();
     void on_actionCreateNewTorrent_triggered();
 
+    void on_actionExit_triggered();
+
 private:
     Ui::MainWindow* ui_;
     QPointer<TorrentCreatorDialog> torrent_creator_dlg_;
