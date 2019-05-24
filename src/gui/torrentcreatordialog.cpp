@@ -9,9 +9,9 @@
 
 #include "crypto/blockcryptor.h"
 
-//#include "core/bittorrent/session.h"
+#include "core/bittorrent/session.h"
 #include "core/bittorrent/torrentcreatorthread.h"
-//#include "core/bittorrent/torrentinfo.h"
+#include "core/bittorrent/torrentinfo.h"
 
 TorrentCreatorDialog::TorrentCreatorDialog(QWidget* parent, const QString& defautPath)
     : QDialog{parent}
@@ -107,6 +107,11 @@ void TorrentCreatorDialog::onCreateButtonClicked()
         return;
     }
     input_ = fi.canonicalFilePath();
+
+    if (model_->rowCount() == 0) {
+        QMessageBox::critical(this, tr("Torrent creation failed"), tr("Reason: No public key selected."));
+        return;
+    }
 
     // get save path
     const QString savePath = QString(QDir::homePath()) + QLatin1Char('/') + fi.fileName() + QLatin1String(".torrent");
