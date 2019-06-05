@@ -132,8 +132,8 @@ void TorrentCreatorDialog::onCreateButtonClicked()
     BlockCryptor encryptor;
     switch (algorithm_index) {
         case 0:  encryptor.setCipher<AesCipher>(key_size);       break;
-        case 1:  encryptor.setCipher<SerpentCipher>(key_size);   break;
-        case 2:  encryptor.setCipher<TwofishCipher>(key_size);   break;
+        case 1:  encryptor.setCipher<TwofishCipher>(key_size);   break;
+        case 2:  encryptor.setCipher<SerpentCipher>(key_size);   break;
         case 3:  encryptor.setCipher<CamelliaCipher>(key_size);  break;
     }
 

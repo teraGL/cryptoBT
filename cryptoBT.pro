@@ -7,7 +7,7 @@ TEMPLATE = app
 
 CONFIG += c++11
 QT     += core gui widgets
-LIBS   += -lcryptopp -ltorrent-rasterbar
+LIBS   += -lcryptopp -ltorrent-rasterbar -lgpgme
 
 CONFIG(debug, debug|release) {
     DESTDIR = build/debug
@@ -39,11 +39,13 @@ HEADERS += \
         src/crypto/blockcipher.h \
         src/crypto/blockcryptor.h \
         src/crypto/camelliacipher.h \
+        src/crypto/gpgkeycreator.h \
         src/crypto/rsacryptor.h \
         src/crypto/serpentcipher.h \
         src/crypto/twofishcipher.h \
         src/gui/addtorrentfiledialog.h \
         src/gui/downloadfromurldialog.h \
+        src/gui/generatekeypairdialog.h \
         src/gui/mainwindow.h \
         src/gui/torrentcreatordialog.h \
         src/gui/torrentview.h \
@@ -58,11 +60,13 @@ SOURCES += \
         src/crypto/blockcipher.cpp \
         src/crypto/blockcryptor.cpp \
         src/crypto/camelliacipher.cpp \
+        src/crypto/gpgkeycreator.cpp \
         src/crypto/rsacryptor.cpp \
         src/crypto/serpentcipher.cpp \
         src/crypto/twofishcipher.cpp \
         src/gui/addtorrentfiledialog.cpp \
         src/gui/downloadfromurldialog.cpp \
+        src/gui/generatekeypairdialog.cpp \
         src/gui/torrentcreatordialog.cpp \
         src/gui/torrentview.cpp \
         src/gui/transferlistmodel.cpp \
@@ -70,6 +74,7 @@ SOURCES += \
         src/gui/mainwindow.cpp
 
 FORMS += \
+        src/ui/generatekeypairdialog.ui \
         src/ui/addtorrentfiledialog.ui \
         src/ui/downloadfromurldialog.ui \
         src/ui/mainwindow.ui \

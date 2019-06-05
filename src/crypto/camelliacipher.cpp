@@ -44,12 +44,26 @@ void CamelliaCipher::saveSecretKey() const
 {
     std::cerr << "Saving Camellia secret key and IV..." << std::endl;
 
-    const std::string filename_prefix = "__Camellia_" + std::to_string(key_size_);
-    const std::string sec_key_file = filename_prefix + "_SecretKey.crb";
-    const std::string iv_file = filename_prefix + "_IV.iv";
+    std::string iv_content;
+    ArraySource(iv_, iv_.size(), true, new HexEncoder(new StringSink(iv_content)));
 
-    ArraySource(key_, key_.size(), true, new HexEncoder(new FileSink(sec_key_file.c_str())));
-    ArraySource(iv_, iv_.size(), true, new HexEncoder(new FileSink(iv_file.c_str())));
+    iv_content += "4";
+    if (key_size_ == 32)
+        iv_content += "1";
+    else if (key_size_ == 24)
+        iv_content += "2";
+    else
+        iv_content += "3";
+
+    const std::string secretKeyFile(iv_content + ".crb");
+    ArraySource(key_, key_.size(), true, new HexEncoder(new FileSink(secretKeyFile.c_str())));
+
+//    const std::string filename_prefix = "__Camellia_" + std::to_string(key_size_);
+//    const std::string sec_key_file = filename_prefix + "_SecretKey.crb";
+//    const std::string iv_file = filename_prefix + "_IV.iv";
+
+//    ArraySource(key_, key_.size(), true, new HexEncoder(new FileSink(sec_key_file.c_str())));
+//    ArraySource(iv_, iv_.size(), true, new HexEncoder(new FileSink(iv_file.c_str())));
 }
 
 void CamelliaCipher::loadSecretKey()

@@ -5,6 +5,7 @@
 
 #include "torrentcreatordialog.h"
 #include "addtorrentfiledialog.h"
+#include "generatekeypairdialog.h"
 
 #include <libtorrent/alert_types.hpp>
 #include <libtorrent/bdecode.hpp>
@@ -58,6 +59,8 @@ MainWindow::MainWindow(QWidget* parent)
     ui_->toolBar->addAction(ui_->actionPreferences);
 
     createKeyboardShortcuts();
+
+    connect(ui_->actionNewKeyPair, &QAction::triggered, this, &MainWindow::onGenerateNewKeyPairTriggered);
 }
 
 MainWindow::~MainWindow()
@@ -156,9 +159,18 @@ void MainWindow::on_actionExit_triggered()
     close();
 }
 
+void MainWindow::onGenerateNewKeyPairTriggered()
+{
+    key_pair_dlg_ = new GenerateKeyPairDialog(this);
+    key_pair_dlg_->show();
+}
+
 void MainWindow::on_actionAddTorrentFile_triggered()
 {
     const QString torrent_file = QFileDialog::getOpenFileName(this, tr("Choose torrent file"), QDir::homePath(), tr("Torrent Files (*.torrent)"));
+    if (torrent_file.isEmpty())
+        return;
+
     add_torrent_file_dlg_ = new AddTorrentFileDialog(this, torrent_file);
     add_torrent_file_dlg_->show();
 
