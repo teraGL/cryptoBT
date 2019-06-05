@@ -2,11 +2,17 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPointer>
 
 namespace Ui
 {
     class MainWindow;
 }
+
+class TorrentCreatorDialog;
+class DownloadFromURLDialog;
+class AddTorrentFileDialog;
+class GenerateKeyPairDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -17,12 +23,23 @@ public:
     ~MainWindow() override;
 
 private slots:
+    void createKeyboardShortcuts();
+    void downloadFromURLList(const QStringList &urlList);
     void about();
 
     void on_actionAbout_triggered();
+    void on_actionCreateNewTorrent_triggered();
+    void on_actionAddTorrentLink_triggered();
+    void on_actionAddTorrentFile_triggered();
+    void on_actionExit_triggered();
+    void onGenerateNewKeyPairTriggered();
 
 private:
     Ui::MainWindow* ui_;
+    QPointer<TorrentCreatorDialog> torrent_creator_dlg_;
+    QPointer<DownloadFromURLDialog> download_from_URL_dlg_;
+    QPointer<AddTorrentFileDialog> add_torrent_file_dlg_;
+    QPointer<GenerateKeyPairDialog> key_pair_dlg_;
 };
 
 #endif // MAINWINDOW_H
