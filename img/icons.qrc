@@ -20,5 +20,9 @@
         <file>cancel.svg</file>
         <file>save.svg</file>
         <file>choose-public-key.svg</file>
+        <file>torrent-file.svg</file>
+        <file>dest-folder.svg</file>
+        <file>files.svg</file>
+        <file>add.svg</file>
     </qresource>
 </RCC>
