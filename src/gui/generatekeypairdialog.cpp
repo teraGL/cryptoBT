@@ -50,8 +50,11 @@ void GenerateKeyPairDialog::onCreateButtonClicked()
         return;
     }
 
-    const QRegularExpression re("^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$");
-    if (!re.match(ui_->emailLineEdit->text()).hasMatch()) {
+    const QRegularExpression email_regex(
+        "^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$"
+    );
+
+    if (!email_regex.match(ui_->emailLineEdit->text()).hasMatch()) {
         QMessageBox::critical(this, tr("Creating fields"), tr("Reason: Incorrect email address."));
         return;
     }
