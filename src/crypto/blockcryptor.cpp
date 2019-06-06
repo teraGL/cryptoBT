@@ -10,9 +10,9 @@ void BlockCryptor::generateKey() const
     block_cipher_->generateKey();
 }
 
-void BlockCryptor::saveSecretKey() const
+void BlockCryptor::saveSecretKey(const QString& filePath) const
 {
-    block_cipher_->saveSecretKey();
+    block_cipher_->saveSecretKey(filePath);
 }
 
 void BlockCryptor::loadSecretKey() const

@@ -141,7 +141,7 @@ void TorrentCreatorDialog::onCreateButtonClicked()
     encryptor.generateKey();
     ui_->progressBarEncrypting->setValue(2);
 
-    encryptor.saveSecretKey();
+    encryptor.saveSecretKey(input_);
     ui_->progressBarEncrypting->setValue(4);
 
     encryptor.encryptFile(input_);
@@ -149,9 +149,8 @@ void TorrentCreatorDialog::onCreateButtonClicked()
 
 
     // Creating torrent file
-    const QString seeding_dir = createDefaultSeedingDir();
-    const QString fileExt = QFileInfo(input_).fileName() + ".enf";
-    input_ = seeding_dir + fileExt;
+    const QString seeding_dir = createDirForFileWithKey(input_);
+    input_ = seeding_dir;
     qDebug() << "Output file: " << input_;
 
     const QStringList trackers = ui_->textTrackersURLs->toPlainText().trimmed()
@@ -160,11 +159,6 @@ void TorrentCreatorDialog::onCreateButtonClicked()
 
     creatorThread_->create({ ui_->checkBoxPrivateTorrent->isChecked(), getPieceSize(),
                              input_, destination, comment, trackers });
-
-//    const QString default_seeding_dir = createDefaultSeedingDir(ui_->textInputPath->text());
-    // 1) Encrypt file/folder
-    // 2) Save Secret Key & IV
-    // 3) default_seeding_dir = createDefaultSeedingDir(ui_->textInputPath->text());
 }
 
 void TorrentCreatorDialog::handleCreationFailure(const QString &msg)
@@ -245,4 +239,14 @@ QString createDefaultSeedingDir()
     }
 
     return seeding_dir;
+}
+
+QString createDirForFileWithKey(const QString& dirname)
+{
+    const QString outDir = createDefaultSeedingDir() + QFileInfo(dirname).fileName() + "/";
+    if (!QDir(outDir).exists()) {
+        QDir().mkpath(outDir);
+        qDebug() << "Created '~/Documents/cryptBT/Seeding/'" << outDir << "successfully!\n";
+    }
+    return outDir;
 }

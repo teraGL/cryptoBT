@@ -12,7 +12,7 @@ public:
     void generateKey() override;
     void setKey(const CryptoPP::SecByteBlock& key, const CryptoPP::SecByteBlock& iv) override;
 
-    void saveSecretKey() const override;
+    void saveSecretKey(const QString& filePath) const override;
     void loadSecretKey() override;
 
     void encryptFile(const QString& filePath) const override;

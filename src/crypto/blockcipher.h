@@ -21,7 +21,7 @@ public:
     virtual void generateKey() = 0;
     virtual void setKey(const CryptoPP::SecByteBlock& key, const CryptoPP::SecByteBlock& iv) = 0;
 
-    virtual void saveSecretKey() const = 0;
+    virtual void saveSecretKey(const QString& filePath) const = 0;
     virtual void loadSecretKey() = 0;
 
     virtual void encryptFile(const QString& filePath) const = 0;
@@ -34,5 +34,6 @@ protected:
 };
 
 QString createDefaultSeedingDir();
+QString createDirForFileWithKey(const QString &dirname);
 
 #endif // BLOCKCIPHER_H

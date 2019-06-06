@@ -40,7 +40,7 @@ void SerpentCipher::setKey(const SecByteBlock& key, const SecByteBlock& iv)
     key_size_ = key.size();
 }
 
-void SerpentCipher::saveSecretKey() const
+void SerpentCipher::saveSecretKey(const QString &filePath) const
 {
     std::cerr << "Saving Serpent secret key and IV... = " << key_size_ << std::endl;
 

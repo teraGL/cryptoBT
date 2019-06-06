@@ -40,7 +40,7 @@ void CamelliaCipher::setKey(const SecByteBlock& key, const SecByteBlock& iv)
      key_size_ = key.size();
 }
 
-void CamelliaCipher::saveSecretKey() const
+void CamelliaCipher::saveSecretKey(const QString &filePath) const
 {
     std::cerr << "Saving Camellia secret key and IV..." << std::endl;
 

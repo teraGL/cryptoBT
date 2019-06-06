@@ -41,7 +41,7 @@ void AesCipher::setKey(const SecByteBlock& key, const SecByteBlock& iv)
      key_size_ = key.size();
 }
 
-void AesCipher::saveSecretKey() const
+void AesCipher::saveSecretKey(const QString &filePath) const
 {
     std::cerr << "Saving AES secret key and IV..." << std::endl;
 
@@ -56,7 +56,8 @@ void AesCipher::saveSecretKey() const
     else
         iv_content += "3";
 
-    const std::string secretKeyFile /*= createDefaultSeedingDir() + QFileInfo(filePath).fileName();*/   (iv_content + ".crb");
+    const QString outDir = createDirForFileWithKey(QFileInfo(filePath).fileName());
+    const std::string secretKeyFile = outDir.toStdString() + iv_content + ".crb";
     ArraySource(key_, key_.size(), true, new HexEncoder(new FileSink(secretKeyFile.c_str())));
 
     // TODO: create one function for generating secret key & iv files
@@ -85,8 +86,8 @@ void AesCipher::loadSecretKey()
 
 void AesCipher::encryptFile(const QString& filePath) const
 {
-    const QString fileEncryptedExt = createDefaultSeedingDir()
-                                     + QFileInfo(filePath).fileName() + ".enf";
+    const QString outDir = createDirForFileWithKey(QFileInfo(filePath).fileName());
+    const QString fileEncryptedExt = outDir + QFileInfo(filePath).fileName() + ".enf";
     const auto outFile = fileEncryptedExt.toUtf8().constData();
 
     try {

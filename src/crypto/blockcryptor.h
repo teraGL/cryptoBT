@@ -18,7 +18,7 @@ public:
 
     void generateKey() const;
 
-    void saveSecretKey() const;
+    void saveSecretKey(const QString& filePath) const;
     void loadSecretKey() const;
 
     void encryptFile(const QString& filePath) const;

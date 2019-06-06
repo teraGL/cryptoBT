@@ -40,7 +40,7 @@ void TwofishCipher::setKey(const SecByteBlock& key, const SecByteBlock& iv)
     key_size_ = key.size();
 }
 
-void TwofishCipher::saveSecretKey() const
+void TwofishCipher::saveSecretKey(const QString &filePath) const
 {
     std::cerr << "Saving Twofish secret key and IV..." << std::endl;
 
