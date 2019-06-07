@@ -151,7 +151,7 @@ void TorrentCreatorDialog::onCreateButtonClicked()
     // Creating torrent file
     const QString seeding_dir = createDirForFileWithKey(input_);
     input_ = seeding_dir;
-    qDebug() << "Output file: " << input_;
+    qDebug() << "  *Output file: " << input_;
 
     const QStringList trackers = ui_->textTrackersURLs->toPlainText().trimmed()
         .replace(QRegularExpression("\n\n[\n]+"), "\n\n").split('\n');
@@ -224,18 +224,15 @@ void TorrentCreatorDialog::setInteractionEnabled(bool enabled)
 QString createDefaultSeedingDir()
 {
     QString documents_dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    qDebug() << "Standard Documents dir =" << documents_dir << "\n";
 
     if (!documents_dir.contains("Documents")) {
         documents_dir += "/Documents";
         QDir().mkdir(documents_dir);
-        qDebug() << "Created '~/Documents' successfully!\n";
     }
 
     const QString seeding_dir = documents_dir + "/cryptoBT/Seeding/";
     if (!QDir(seeding_dir).exists()) {
         QDir().mkpath(seeding_dir);
-        qDebug() << "Created '~/Documents/cryptBT/Seeding' successfully!\n";
     }
 
     return seeding_dir;
@@ -246,7 +243,6 @@ QString createDirForFileWithKey(const QString& dirname)
     const QString outDir = createDefaultSeedingDir() + QFileInfo(dirname).fileName() + "/";
     if (!QDir(outDir).exists()) {
         QDir().mkpath(outDir);
-        qDebug() << "Created '~/Documents/cryptBT/Seeding/'" << outDir << "successfully!\n";
     }
     return outDir;
 }
