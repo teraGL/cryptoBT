@@ -24,5 +24,9 @@
         <file>dest-folder.svg</file>
         <file>files.svg</file>
         <file>add.svg</file>
+        <file>status.svg</file>
+        <file>content.svg</file>
+        <file>details.svg</file>
+        <file>network.svg</file>
     </qresource>
 </RCC>
