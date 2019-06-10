@@ -39,7 +39,6 @@ HEADERS += \
         src/crypto/blockcipher.h \
         src/crypto/blockcryptor.h \
         src/crypto/camelliacipher.h \
-        src/crypto/gpgkeycreator.h \
         src/crypto/rsacryptor.h \
         src/crypto/serpentcipher.h \
         src/crypto/twofishcipher.h \
@@ -60,7 +59,6 @@ SOURCES += \
         src/crypto/blockcipher.cpp \
         src/crypto/blockcryptor.cpp \
         src/crypto/camelliacipher.cpp \
-        src/crypto/gpgkeycreator.cpp \
         src/crypto/rsacryptor.cpp \
         src/crypto/serpentcipher.cpp \
         src/crypto/twofishcipher.cpp \
